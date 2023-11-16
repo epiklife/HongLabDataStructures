@@ -2,24 +2,23 @@
 
 using namespace std;
 
-/*
-int MySwapValue(int i, int j)
-{
-	// TODO:
 
-	return ? ;
-}
 
 void MySwapPtr(int* i, int* j)
 {
-	// TODO:
+	int temp = *i;
+	*i = *j;
+	*j = temp;
+
 }
 
 void MySwapRef(int& i, int& j)
 {
-	// TODO:
+	int temp = i;
+	i = j;
+	j = temp;
 }
-*/
+
 
 bool CheckSorted(int a, int b)
 {
@@ -35,7 +34,7 @@ int main()
 
 		cout << a << " " << b << endl;
 
-		// TODO:
+		MySwapRef(a, b);
 
 		cout << a << " " << b << endl;
 	}
@@ -55,7 +54,7 @@ int main()
 	// 값과 상관 없이 항상 작은 값이 먼저 출력되게 하려면?
 	// 두 값이 같을 때는 순서가 상관 없음 -> 큰 값이 먼저 출력되지 않게 하려면?
 	{
-		int arr[2];
+		///int arr[2];
 
 		// TODO:
 	}
