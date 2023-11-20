@@ -29,7 +29,7 @@ int BinarySearch(int* arr, int n, int x) // 이진 탐색
 	{
 		PrintHelper(arr, n, left, right);
 
-		// int middle = ... ; // 정수 나누기 (버림)
+		int middle = (left + right) / 2
 
 		// cout << "middle " << middle << endl;
 
