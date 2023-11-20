@@ -43,18 +43,22 @@ int main()
 
 	// char arr[] = "ababcdfdceeefda";
 	// char arr[] = "a";
-	char arr[] = "ababcdfdceeedag";
+	char arr[] = "ababcdfdceeefda";
 	int n = sizeof(arr) - 1; // 마지막 안보이는 '\0' 제외
 
 	// 글자가 하나이상이라고 가정
 	// 글자가 없으면 if로 아예 수행을 안하도록 처리 가능
 	assert(n >= 1);
-
+	int a;
 	cout << arr << endl;
-
 	// 풀이 1. 모든 알파벳에 대해서 Count()
 	// 힌트: 소문자 알파벳 'a'~'z'는 int로는 97~122에 대응
 	// 단점: 없는 알파벳도 세야 한다.
+	for (int i = 97; i < 97 + 26; i++)
+	{
+		if (Count(arr, n, i) != 0)
+			cout << char(i) << Count(arr, n, i);
+	}
 
 	// 표를 사용할 수도 있고 사용하지 않을 수도 있음
 	int table[26] = { 0 }; // 모든 값을 0으로 초기화
@@ -64,10 +68,10 @@ int main()
 		// 힌트: char(i + 97)
 
 		// 표를 만들고 나중에 몰아서 출력하는 방법
-		// table[i] = ...
-
+		table[i] = Count(arr, n, char(i + 97));
 		// 표를 만들지 않고 직접 출력하는 방법
 		// ...
+
 	}
 
 	cout << endl;
@@ -75,7 +79,8 @@ int main()
 	// 출력
 	for (int i = 0; i < 26; i++)
 	{
-		// ...
+		if(table[i] != 0)
+			cout << char(i + 97) << table[i];
 	}
 	cout << endl << endl;
 
@@ -96,15 +101,19 @@ int main()
 	{
 		if (arr[i] == c)
 		{
-			// TODO: ...
+			count++;
 		}
+		
 		else
 		{
-			// TODO: ...
+			cout << count;
+			count = 1;
+			c = arr[i];
+			cout << c;
 		}
 	}
 
-	cout << count << endl; // 마지막 count 출력
-
+	 // 마지막 count 출력
+	cout << count << endl;
 	return 0;
 }

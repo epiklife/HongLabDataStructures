@@ -59,24 +59,40 @@ int main()
 // 배열 arr에 x가 몇 번 나오는지 반환
 int Count(int* arr, int n, int x)
 {
-	// TODO:
+	int count_num = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] == x)
+			count_num++;
+	}
 
-	return 0;
+	return count_num;
 }
 
 // 배열 arr에 x가 있으면 index 반환, 없으면 -1 반환
 int SequentialSearch(int* arr, int n, int x)
 {
-	// TODO:
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] == x)
+			return i;
+	}
 
 	return -1;
 }
 
 int SortedCountHelper(int* arr, int n, int x, int start) // start 사용
 {
-	// TODO: 
+	int count_num = 0;
+	for (int i = start; i < n; i++)
+	{
+		if (arr[i] == x)
+			count_num++;
+		else
+			break; // 내가 직접 구현하려 했는데 구현 못함 - 정렬후 다음 숫자는 다르다는걸 이용해 조기 종료
+	}
 
-	return 0;
+	return count_num;
 }
 
 int SortedCount(int* arr, int n, int x)

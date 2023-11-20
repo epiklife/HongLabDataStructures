@@ -46,7 +46,7 @@ void Print(Element* arr, int size)
 
 int main()
 {
-	// 3개 정렬
+	/* 3개 정렬
 	{
 		for (int k = 0; k < 3; k++)
 			for (int j = 0; j < 3; j++)
@@ -82,9 +82,10 @@ int main()
 					cout << CheckSorted(arr, size); // 정렬 되었나 확인
 					cout << endl;
 				}
-	}
 
-	return 0; // <- 실습용 임시
+	}
+	*/
+	//return 0; // <- 실습용 임시
 
 	// 5개라면? 더 많다면?
 	{
@@ -98,17 +99,25 @@ int main()
 	}
 
 	// 가장 작은 수 찾기
+	/*
 	{
 		int arr[] = { 8, 3, 2, 5, 1, 1, 2, 5, 8, 9 }; // 임의의 숫자들, 변경 가능
 		int size = sizeof(arr) / sizeof(arr[0]);
 
 		assert(size > 0); // size가 1이상이라고 가정
-
-		// TODO:
-
-		// cout << "Minimum number is " << min_number << endl;
+		int min_number = arr[0];
+		for (int i = 0; i < size; i++)
+		{
+			if (arr[i] < min_number)
+			{
+				min_number = arr[i];
+			}
+		}
+		// min_number = arr[i] < min_number ? arr[i] : min_number;
+		// min_number = std::min(arr[i], min_number);
+		cout << "Minimum number is " << min_number << endl;
 	}
-
+	
 	// 가장 작은 수의 인덱스 찾기
 	{
 		int arr[] = { 8, 3, 2, 5, 1, 1, 2, 5, 8, 9 };
@@ -116,12 +125,21 @@ int main()
 
 		assert(size > 0); // size가 1이상이라고 가정
 
-		// TODO:
+		int min_index = 0;
 
-		//cout << "The index of min is " << min_index << endl;
-		//cout << "Minimum number is " << arr[min_index] << endl;
+		for (int j = 0; j < size; j++)
+		{
+			if (arr[j] < arr[min_index])
+			{
+				min_index = j;
+			}
+		}
+
+		cout << "The index of min is " << min_index << endl;
+		cout << "Minimum number is " << arr[min_index] << endl;
 	}
-
+	
+	
 	// Selection Sort
 	// 힌트: swap()
 	{
@@ -129,19 +147,35 @@ int main()
 		int size = sizeof(arr) / sizeof(arr[0]);
 
 		int min_index;
+	
 		for (int i = 0; i < size - 1; i++)
 		{
+			min_index = i;
+			for (int j = i + 1; j < size; j++)
+			{
+				
+				if (arr[j] <= arr[min_index])
+				{
+					min_index = j;
+				}
+				
+			}
 
-			// TODO:
+			swap(arr[i], arr[min_index]);
 
+			
 			Print(arr, size);
 
 			cout << boolalpha;
 			cout << CheckSorted(arr, size);
 			cout << endl;
+			if (CheckSorted(arr, size))
+			{
+				return 0;
+			}
 		}
 	}
-
+	
 	// 비교 횟수 세보기, 더 효율적인 방법은 없을까?
 	// https://en.wikipedia.org/wiki/Sorting_algorithm
 	{
@@ -153,8 +187,25 @@ int main()
 			for (int s = 0; s < size; s++) {
 				arr[s] = size - s;
 			}
+			int min_index;
 
-			//TODO: count ++;
+			for (int i = 0; i < size - 1; i++)
+			{
+				min_index = i;
+				for (int j = i + 1; j < size; j++)
+				{
+					count++;
+
+					if (arr[j] <= arr[min_index])
+					{
+						min_index = j;
+					}
+
+				}
+				swap(arr[i], arr[min_index]);
+
+				Print(arr, size);
+			}
 
 			//cout << size << ", " << count << endl;
 			ofile << size << ", " << count << endl;
@@ -165,7 +216,8 @@ int main()
 
 		ofile.close();
 	}
-
+	return 0; 
+	*/
 	// [2, 2, 1]
 	// [1, 2, 2] // 첫 2가 마지막으로 이동
 
@@ -176,7 +228,16 @@ int main()
 
 		Print(arr, size); // arr이 Element의 배열
 
-		// TODO:
+		int min_index;
+		for (int i = 0; i < size - 1; i++)
+		{
+			min_index = i;
+			for (int j = i + 1; j < size; j++)
+			{
+				if (arr[j].key < arr[min_index].key)
+					min_index = j;
+			}
+		}
 
 		Print(arr, size); // arr이 Element의 배열
 	}
