@@ -14,16 +14,29 @@ int Fibonacci(int n)
 	else
 	{
 		int fn = 0;
+		int a = 0;
+		int b = 1;
+		for (int i = 2; i <= n; i++)
+		{
+			fn = a + b;
 
-		// TODO:
-
+			a = b;
+			b = fn;
+		}
+		
 		return fn;
 	}
 }
 
 int RecurFibonacci(int n)
 {
-	return 0;
+		if (n == 0)
+			return 0; // F0 = 0 
+		else if (n == 1)
+			return 1; // F1 = 1
+		else
+			return RecurFibonacci(n - 2) + RecurFibonacci(n - 1);
+
 }
 
 int main()
