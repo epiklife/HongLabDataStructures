@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include<string.h>
 struct Term
 {
 	float coef;
@@ -13,11 +13,19 @@ public:
 	{
 		// 아무것도 하지 않음 (동적할당 메모리 없이 시작)
 	}
+	SparsePolynomial(const SparsePolynomial& poly)
+	{
+		this->capacity_ = poly.capacity_;
+		this->num_terms_ = poly.num_terms_;
+		terms_ = new Term[capacity_];
+
+		memcpy(terms_, poly.terms_, poly.num_terms_);
+	}
 
 	~SparsePolynomial()
 	{
 		if (terms_) delete[] terms_;
-	}
+	}  
 
 	// 새로운 항을 추가할 때 자기 위치를 찾아서 넣어줘야 함
 	void NewTerm(float coef, int exp);

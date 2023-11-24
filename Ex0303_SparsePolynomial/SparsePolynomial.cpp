@@ -38,7 +38,10 @@ float SparsePolynomial::Eval(float x)
 {
 	float temp = 0.0f;
 
-	// TODO:
+	for (int i = 0; i < num_terms_; i++)
+	{
+		temp += terms_[i].coef * std::powf(x, float(terms_[i].exp));
+	}
 
 	return temp;
 }
@@ -56,11 +59,45 @@ SparsePolynomial SparsePolynomial::Add(const SparsePolynomial& poly)
 
 	SparsePolynomial temp;
 
-	// TODO:
+	int i = 0, j = 0;
 
-	return temp;
+	while (i < num_terms_ && j < poly.num_terms_)
+	{
+
+		while ((i < this->num_terms_) && (j < poly.num_terms_))
+		{
+			if ((terms_[i].exp == poly.terms_[j].exp))
+			{
+					temp.NewTerm((float(terms_[i].coef + poly.terms_[j].coef)), terms_[i].exp);
+					i++;
+					j++;
+
+			}
+			else if ((terms_[i].exp > poly.terms_[j].exp))
+			{
+				temp.NewTerm(float(poly.terms_[j].coef), poly.terms_[j].exp);
+				j++;
+			}
+			else
+			{
+				temp.NewTerm(float(terms_[i].coef), terms_[i].exp);
+				i++;
+			}
+		}
+		for (; i < num_terms_; i++)
+		{
+			temp.NewTerm(float(terms_[i].coef), terms_[i].exp);
+
+		}
+
+		for (; j < poly.num_terms_; j++)
+		{
+			temp.NewTerm(float(poly.terms_[j].coef), poly.terms_[j].exp);
+		}
+
+		return temp;
+	}
 }
-
 void SparsePolynomial::Print()
 {
 	bool is_first = true; // 더하기 출력시 확인용
