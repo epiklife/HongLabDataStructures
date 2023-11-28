@@ -29,13 +29,16 @@ public:
 
 	bool IsEmpty() const
 	{
-		return false; // TODO:
+		if (top_ == -1)
+			return true;
+		return false;
 	}
 
 	int Size() const
 	{
-		return 0; //TODO:
+		return top_ + 1;
 	}
+	
 
 	void Print()
 	{
@@ -46,9 +49,10 @@ public:
 		cout << endl;
 	}
 
+
 	// Returns TOP element of stack.
 	T& Top() const
-	{
+	{	
 		assert(!IsEmpty());
 
 		return stack_[top_];
@@ -57,9 +61,12 @@ public:
 	// Insert item into the TOP of the stack
 	void Push(const T& item)
 	{
-		// TODO: 필요하면 리사이즈 
 
-		// TODO:
+		if (top_ == capacity_ - 1)
+			Resize(capacity_ * 2);
+
+		top_++;
+		stack_[top_] = item;
 	}
 
 	// Delete the TOP element of the stack
@@ -67,7 +74,9 @@ public:
 	{
 		assert(!IsEmpty());
 
-		// TODO:
+		top_--;
+
+		// stack[top--].~T(); 소멸자를 수동 호출
 	}
 
 protected: // 뒤에서 상속해서 사용

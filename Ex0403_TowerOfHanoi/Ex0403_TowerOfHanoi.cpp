@@ -45,7 +45,13 @@ void MoveDisk(int from, int to)
 
 void RecurMoveDisks(int n, int from, int temp, int to)
 {
-	// TODO:
+	if (n == 0)
+		return;
+	RecurMoveDisks(n - 1, from, to, temp);
+	MoveDisk(from, to);
+	RecurMoveDisks(n - 1, temp, from, to);
+
+	
 }
 
 int main()
@@ -61,5 +67,6 @@ int main()
 
 	RecurMoveDisks(num_disks, 0, 1, 2);
 
+	PrintTowers();
 	return 0;
 }
