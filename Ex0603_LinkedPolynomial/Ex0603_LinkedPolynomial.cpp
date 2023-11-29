@@ -16,14 +16,19 @@ public:
 
 	void NewTerm(float coef, int exp)
 	{
-		// TODO:
+		Term new_term = { coef, exp };
+		PushBack(new_term);
 	}
 
 	float Eval(float x)
 	{
 		float temp = 0.0f;
-
-		// TODO:
+		Node* current = first_;
+		while (current)
+		{
+			temp += current->item.coef * std::powf(x, float(current->item.exp));
+			current = current->next;
+		}
 
 		return temp;
 	}
@@ -38,8 +43,37 @@ public:
 		Node* i = this->first_;
 		Node* j = poly.first_;
 
-		// TODO:
+		while (i && j)
+		{
 
+			if ((i->item.exp == j->item.exp))
+			{	if(i->item.coef + j->item.coef)
+					temp.NewTerm((float(i->item.coef + j->item.coef)), i->item.exp);
+				i = i->next;
+				j = j->next;
+
+			}
+			else if ((i->item.exp > j->item.exp))
+			{
+				temp.PushBack(j->item);
+				j = j->next;
+			}
+			else
+			{
+				temp.PushBack(i->item);
+				i = i->next;
+			}
+		}
+		for (; i; i = i->next)
+		{
+			temp.PushBack(i->item);
+		}
+
+		for (; j; j = j->next)
+		{
+			temp.PushBack(j->item);
+		}
+		
 		return temp;
 	}
 
@@ -47,7 +81,21 @@ public:
 	{
 		bool is_first = true; // 더하기 출력시 확인용
 
-		// TODO:
+		Node* i = this->first_;
+		while(i)
+		{
+			// 0이 아닌 항들만 골라서 출력할 필요가 없음
+
+			if (!is_first)
+				cout << " + "; // 첫 항이 아니라면 사이사이에 더하기 출력
+
+			cout << i->item.coef;
+
+			if (i->item.exp != 0) cout << "*" << "x^" << i->item.exp;
+
+			is_first = false;
+			i = i->next;
+		}
 
 		cout << endl;
 	}

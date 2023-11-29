@@ -11,10 +11,15 @@ int main()
 	list.SetPrintDebug(false);
 
 	list.PushFront(3);
+
 	list.PushBack(4);
+
 	list.PushFront(2);
+
 	list.PushFront(1);
+
 	list.PushBack(5);
+
 
 	list.Print();
 

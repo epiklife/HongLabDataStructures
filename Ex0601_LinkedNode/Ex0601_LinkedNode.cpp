@@ -9,19 +9,29 @@ struct Node
 
 	friend ostream& operator<<(ostream& os, const Node& n)
 	{
-		cout << n.item << " " << flush;
+		cout << "[" << &n << ", " << n.item << ", " << n.next << "]" << flush;
 		return os;
 	}
 };
 
 void RecurPrint(Node* node)
 {
-	// TODO:
+	if (node)
+	{
+		cout << *node << endl;
+
+		RecurPrint(node->next);
+	}
 }
 
 void IterPrint(Node* node)
 {
-	// TODO:
+	Node* current = node;
+	while (current)
+	{
+		cout << *current << endl;
+		current = current->next;
+	}
 }
 
 int main()
@@ -55,45 +65,58 @@ int main()
 
 	// 계속 추가 가능
 
-	cout << *first << endl;
-	cout << *second << endl;
+	cout << first << " " << *first << endl;
+	cout << second << " " << *second << endl;
 	cout << *third << endl;
 	cout << *fourth << endl;
 	cout << *fifth << endl;
 	cout << endl;
 
 	// 연결 관계 만들어 주기
-	// first->next = second;
-	// TODO:
-	// 마지막
+	first->next = second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+	fifth->next = nullptr;
 
-	//cout << *(first) << endl;
-	//cout << *(first->next) << endl;
-	//cout << *(first->next->next) << endl;
-	//cout << *(first->next->next->next) << endl;
-	//cout << *(first->next->next->next->next) << endl;
-	//// cout << *(first->next->next->next->next->next) << endl; // 오류
+	cout << *(first) << endl;
+	cout << *(first->next) << endl;
+	cout << *(first->next->next) << endl;
+	cout << *(first->next->next->next) << endl;
+	cout << *(first->next->next->next->next) << endl;
+	//cout << *(first->next->next->next->next->next) << endl; // 오류
 
 	cout << endl;
 
 	// 임시 변수 사용
-	//{
-	//	Node* current = first;
-	//	cout << *current << endl;
+	{
+		Node* current = first;
+		cout << *current << endl;
 
-	// TODO:
-	//	cout << endl;
-	//}
+		current = current->next;
+		cout << *current << endl;
+		// 이런식으로 반복
+		cout << endl;
+	}
 
 	// 재귀 호출 이용
-	//RecurPrint(first);
-	//cout << endl;
+	RecurPrint(first);
+	cout << endl;
 
 	// 반복문 이용
-	//IterPrint(first);
-	//cout << endl;
+	IterPrint(first);
+	cout << endl;
 
-	// TODO: 데이터 삭제
+	//데이터 삭제
+	Node* current = first;
+	while (current)
+	{
+		Node* temp = current; //굳이 이렇게 하는이유는 current가 사라지면, current->next를 영영 못찾음
+
+		current = current->next;
+
+		delete temp;
+	}
 
 	return 0;
 }
