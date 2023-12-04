@@ -32,17 +32,51 @@ public:
 	int Evaluate(Node* node)
 	{
 		// TODO: 트리에 저장된 수식의 결과값을 계산
-		return 0;
+		if (!node) return 0;
+
+		if (node->item >= '0' && node->item <= '9') // 숫자(피연산자)라면 output에 추가
+			return node->item - '0';
+		else if (node->item == '*')
+			return Evaluate(node->left) * Evaluate(node->right);
+		else if (node->item == '+')
+			return Evaluate(node->left) + Evaluate(node->right);
+		else if (node->item == '-')
+			return Evaluate(node->left) - Evaluate(node->right);
+		else if (node->item == '/')
+			return Evaluate(node->left) / Evaluate(node->right);
 	}
 
 	void Infix() { Infix(root_); cout << endl; }
 	void Infix(Node* node) {
 		// TODO: 수식을 Infix 형식으로 출력 (괄호 포함)
+		if (node)
+		{
+			if (!IsDigit(node->item))
+			{
+				cout << '(';
+			}
+			Infix(node->left);
+			cout << node->item;
+			Infix(node->right);
+			if (!IsDigit(node->item))
+			{
+				cout << ')';
+			}
+
+			
+		}
 	}
 
 	void Postfix() { Postfix(root_);  cout << endl; }
 	void Postfix(Node* node) {
 		// TODO: 수식을 Postfix 형식으로 출력
+		if(node)
+		{
+			Postfix(node->left);
+			
+			Postfix(node->right);
+			cout << node->item << ' ';
+		}
 	}
 
 	// Infix -> postfix -> expression tree
@@ -70,11 +104,18 @@ public:
 
 			if (c >= '0' && c <= '9')
 			{
-				// TODO:
+				Node* temp = new Node{ c, nullptr, nullptr };
+				s.Push(temp); // 숫자라면 새 노드를 만들어서 스택에 넣기
 			}
 			else
 			{
-				// TODO:
+				Node* a = s.Top();
+				s.Pop();
+				Node* b = s.Top();
+				s.Pop();
+
+				Node* temp = new Node{ c, a, b };
+				s.Push(temp);
 			}
 		}
 

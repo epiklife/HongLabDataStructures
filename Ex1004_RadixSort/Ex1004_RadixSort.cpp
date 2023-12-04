@@ -43,8 +43,19 @@ int main()
 
 	for (int exp = 1; m / exp > 0; exp *= 10)
 	{
-		// TODO:
+		for (int i = 0; i < n; i++)
+			queues[(arr[i] / exp) % 10].Enqueue(arr[i]);
 
+		int count = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			while (!queues[i].IsEmpty())
+			{
+				arr[count] = queues[i].Front();
+				queues[i].Dequeue();
+				count++;
+			}
+		}
 		Print(arr, n);
 	}
 

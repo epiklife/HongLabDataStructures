@@ -29,7 +29,20 @@ int main()
 			cout << x << " was not found" << endl;
 		else
 		{
-			// TODO: 
+			// 인덱스 테이블에서 검색할 범위 결정
+			int k = 0;
+			while (k < kn - 1 && keys[k + 1] <= x)
+				k++;
+
+			// 색인 표의 범위에 따라서 선형 탐색
+			// indices[k] 이상 indices[k+1] 미만에 대해 검색
+			// 이때 indices 배열 마지막에 추가로 n을 저장해뒀기 때문에 k+1 사용 가능
+			int found = SequentialSearch(arr, indices[k], indices[k + 1], x);
+
+			if (found >= 0)
+				cout << x << " was found at " << found << endl;
+			else
+				cout << x << " was not found" << endl;
 		}
 	}
 

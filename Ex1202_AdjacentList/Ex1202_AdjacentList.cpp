@@ -91,17 +91,90 @@ public:
 
 	void DepthFirstTraversal(int v) // v는 인덱스
 	{
-		// TODO:
+
+		visited_[v] = true;
+
+		Node* current = list_[v];
+
+		cout << vertices_[v].item << ' ';
+
+		while (current)
+		{
+			int w = current->vertex;
+			if (!visited_[w])
+				DepthFirstTraversal(w);
+
+			current = current->next;
+		}
+
 	}
 
 	void IterDFT()
 	{
-		// TODO:
+		ResetVisited();
+
+		int v = 0;
+
+		Stack<int> s;
+		s.Push(v);
+		visited_[v] = true;
+		
+
+		
+
+		while (!s.IsEmpty())
+		{
+			v = s.Top();
+			s.Pop();
+
+			Node* current = list_[v];
+
+			cout << vertices_[v].item << ' ';
+			while (current)
+			{
+				int w = current->vertex;
+
+				if (!visited_[w])
+				{
+					s.Push(w);
+					visited_[w] = true;
+				}
+				current = current->next;
+			}
+		}
 	}
 
 	void BreadthFirstTraversal()
 	{
-		// TODO:
+		int v = 0; // 0번에서 시작
+
+		Queue<int> q;
+
+		ResetVisited();
+
+		visited_[v] = true;
+		q.Enqueue(v);
+
+		while (!q.IsEmpty())
+		{
+			v = q.Front();
+			q.Dequeue();
+
+			cout << vertices_[v].item << ' ';
+			Node* current = list_[v];
+
+			while(current)
+			{
+				int w = current->vertex;
+
+				if (!visited_[w])
+				{
+					visited_[w] = true;
+					q.Enqueue(w);
+				}
+				current = current->next;
+			}
+		}
 	}
 
 	void ResetVisited()

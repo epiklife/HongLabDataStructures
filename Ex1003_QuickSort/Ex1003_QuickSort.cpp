@@ -34,7 +34,15 @@ int Partition(int arr[], int low, int high, int n)
 
 	while (true)
 	{
-		// TODO:
+		do i = i + 1;
+		while (arr[i] < pivot);
+
+		do j = j - 1;
+		while (arr[j] > pivot);
+
+		if (i >= j)
+			return j;
+		swap(arr[i], arr[j]);
 
 		cout << "pivot=" << pivot << ", i=" << i << ", j=" << j << endl;
 		cout << "         ";

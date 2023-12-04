@@ -71,7 +71,11 @@ public:
 
 	int Sum(Node* node)
 	{
-		return 0; // TODO:
+		int temp = 0;
+		if (!node)
+			return 0;
+		temp = node->item + Sum(node->left) + Sum(node->right);
+		return temp;
 	}
 
 	int Height()
@@ -81,7 +85,12 @@ public:
 
 	int Height(Node* node)
 	{
-		return 0; // TODO:
+		if (!node)
+			return 0;
+		int temp = 0;
+		temp = 1 + std::max(Height(node->left), Height(node->right));
+
+		return temp; // TODO:
 	}
 
 	~BinaryTree()
@@ -93,26 +102,55 @@ public:
 	{
 		if (node)
 		{
-			// TODO: 힌트 Post-order
-		}
+			DeleteTree(node->left);
+			DeleteTree(node->right);
+			delete node;
+			}
+		
 	}
 
 	void Preorder() { Preorder(root_); }
 	void Preorder(Node* node)
 	{
-		// TODO:
-	};
+		if(node)
+		{
+			Visit(node);
+			if (node->left)
+				Preorder(node->left);
+			if (node->right)
+				Preorder(node->right);
+		}
+
+	}
 
 	void Inorder() { Inorder(root_); }
 	void Inorder(Node* node)
 	{
-		// TODO:
+		
+		if (node)
+		{
+			
+			if (node->left)
+				Inorder(node->left);
+			Visit(node);
+			if (node->right)
+				Inorder(node->right);
+		}
+		
 	}
 
 	void Postorder() { Postorder(root_); }
 	void Postorder(Node* node)
 	{
-		// TODO:
+		if (node)
+		{
+			if (node->left)
+				Postorder(node->left);
+			
+			if (node->right)
+				Postorder(node->right);
+			Visit(node);
+		}
 	}
 
 	void LevelOrder()
@@ -122,20 +160,38 @@ public:
 		while (current)
 		{
 			Visit(current);
-			// TODO:
+			if (current->left)
+				q.Enqueue(current->left);
+			if (current->right)
+				q.Enqueue(current->right);
+			if (q.IsEmpty())
+				return;
+			current = q.Front();
+			q.Dequeue();
 		}
-	}
+		
 
+	}
 	void IterPreorder()
 	{
 		if (!root_) return;
 
-		Stack<Node*> s; // 힌트: MyStack q;
+		Stack<Node*> s;
+		 // 힌트: MyStack s;
+
 		s.Push(root_);
 
 		while (!s.IsEmpty())
 		{
-			// TODO:
+			Node* current = s.Top();
+			s.Pop();
+
+			Visit(current);
+
+			if (current->right)
+				s.Push(current->right);
+			if (current->left)
+				s.Push(current->left);
 		}
 	}
 
@@ -148,7 +204,18 @@ public:
 		Node* current = root_;
 		while (current || !s.IsEmpty())
 		{
-			// TODO:
+			while(current)
+			{
+				s.Push(current);
+				current = current->left;
+			}
+
+			current = s.Top();
+			s.Pop();
+			
+			Visit(current);
+
+			current = current->right;
 		}
 	}
 
@@ -161,12 +228,24 @@ public:
 
 		while (!s1.IsEmpty())
 		{
-			// TODO:
-		}
+			
+			Node* node = s1.Top();
+			s1.Pop();
 
+			s2.Push(node);
+
+			if (node->left)
+				s1.Push(node->left);
+			if (node->right)
+				s1.Push(node->right);
+		}
 		while (!s2.IsEmpty())
 		{
-			// TODO:
+			
+			Node* node = s2.Top();
+			s2.Pop();
+
+			Visit(node);
 		}
 	}
 

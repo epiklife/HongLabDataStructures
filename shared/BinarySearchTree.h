@@ -77,7 +77,16 @@ public:
 
 	Item* IterGet(const K& key)
 	{
-		// TODO:
+		Node* current = root_;
+		while(current)
+		{
+			if (key < current->item)
+				current = current->right;
+			else if (key > current->item)
+				current = current->right;
+			else
+				return current->item;
+		}
 
 		return nullptr; // No matching
 	}
@@ -93,14 +102,46 @@ public:
 	{
 		// 힌트: RecurGet()
 
-		// TODO:
+		if (!node) return new Node{ item, nullptr, nullptr };
 
+		if (item.key < node->item.key)
+			node->left = Insert(node->left, item);
+		else if (item.key > node->item.key)
+			node->right = Insert(node->right, item);
+		else
+			node->item = item;
+		
 		return node;
 	}
 
 	void IterInsert(const Item& item)
 	{
-		// TODO:
+		Node* p = root_;
+		Node* pp = nullptr;
+		{
+			while (p)
+			{
+				pp = p;
+				if (item.key < p->item.key)
+					p = p->left;
+				else if (item.key > p->item.key)
+					p = p->right;
+				else
+				{
+					p->item.value = item.value;
+					return;
+				}
+			}
+
+			p = new Node{ item, nullptr, nullptr };
+			if (root_)
+			{
+				if (item.key < pp->item.key)
+				pp->left = p;
+				else pp->right = p;
+			}
+			else root_ = p;
+		}
 	}
 
 	Node* MinKeyLeft(Node* node)
@@ -126,9 +167,24 @@ public:
 			node->left = Remove(node->left, key);
 		else if (key > node->item.key)
 			node->right = Remove(node->right, key);
-		else
+		else // 자식이 둘다 있는 경우
 		{
-			// TODO:
+			if (!node->left)
+			{
+				Node* temp = node->right;
+				delete node;
+				return temp;
+			}
+			if (!node->right)
+			{
+				Node* temp = node->left;
+				delete node;
+				return temp;
+			}
+
+			Node* temp = MinKeyLeft(node->right);
+			node->item = temp->item;
+			node->right = Remove(node->right, temp->item.key);
 		}
 
 		return node;

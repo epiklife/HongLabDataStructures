@@ -23,7 +23,7 @@ int main()
 
 	MaxHeap<int> h;
 
-	for (auto i : { 2, 8, 5, 3, 2, 1, 9, 3, 7 })
+	for (auto i : { 2, 8, 5, 3, 2, 1, 9, 3, 7, 11, 7 })
 	{
 		h.Push(i);
 		h.Print();
@@ -34,7 +34,7 @@ int main()
 	{
 		cout << h.Top() << " ";
 		h.Pop();
-		// h.Print();
+		h.Print();
 	}
 	cout << endl;
 

@@ -28,32 +28,58 @@ public:
 	{
 		// TODO:
 
-		size_t index = item.key; // 키를 인덱스로 사용
-		table_[index] = item;
+		size_t index = HashFunc(item.key); // 키를 인덱스로 사용
+
+		//충돌처리
+		//key가 int 일때 0이면 비어있는거로 가정
+		// 스트링일땐 길이가 0이면 빔
+		//비어있는 다음공간 찾아서 저장
+		/*while (table_[index].key != K()) // 빈곳 못찾으면 무한루프
+		{
+			index++;
+		}
+		table_[index] = item;*/
+
+		for (int i = 0; i < capacity_; i++)
+		{
+			index = (index + i) % capacity_;
+			if (table_[index].key == K())
+			{
+				table_[index] = item;
+				return;
+			}
+		}
 	}
 
 	V Get(const K& key)
 	{
-		// TODO: 못 찾으면 0을 반환
+		size_t index = HashFunc(key);
+		for (int i = 0; i < capacity_; i++)
+		{
+			size_t temp = (index + i) % capacity_;
+			if (table_[index].key == key)
+				return table_[index].value;
 
-		size_t index = key;
-		return table_[index].value;
+		}
+		return V();
 	}
 
 	// 정수 -> 해쉬값
 	size_t HashFunc(const int& key)
 	{
-		// TODO:
-
-		return key;
+		return key % capacity_;
 	}
 
 	// 문자열을 정수 인덱스(해쉬값)로 변환
 	// Horner's method
-	//size_t HashFunc(const string& s)
-	//{
-	//  return TODO:
-	//}
+	size_t HashFunc(const string& s)
+	{
+		size_t index = 0;
+		int g = 31;
+		for (int i = 0; i < s.size(); i++)
+			index += g * int(s.at(i));
+		return index % capacity_;
+	}
 
 	void Print()
 	{
@@ -101,32 +127,32 @@ int main()
 	}
 
 	// 키: std::string, 값: int
-	//{
-	//	using Item = HashTable<string, int>::Item;
+	{
+		using Item = HashTable<string, int>::Item;
 
-	//	HashTable<string, int> h(8);
+		HashTable<string, int> h(8);
 
-	//	h.Insert(Item{ "apple", 1 });
-	//	h.Insert(Item{ "orange", 2 });
-	//	h.Insert(Item{ "mandarin", 4 });
+		h.Insert(Item{ "apple", 1 });
+		h.Insert(Item{ "orange", 2 });
+		h.Insert(Item{ "mandarin", 4 });
 
-	//	h.Print();
+		h.Print();
 
-	//	cout << "apple " << h.Get("apple") << endl;
-	//	cout << "orange " << h.Get("orange") << endl;
-	//	cout << endl;
+		cout << "apple " << h.Get("apple") << endl;
+		cout << "orange " << h.Get("orange") << endl;
+		cout << endl;
 
-	//	h.Print();
+		h.Print();
 
-	//	h.Insert(Item{ "tomato", 4 });
+		h.Insert(Item{ "tomato", 4 });
 
-	//	h.Print(); 
+		h.Print(); 
 
-	//	cout << "apple " << h.Get("apple") << endl;
-	//	cout << "orange " << h.Get("orange") << endl;
-	//	cout << "pineapple " << h.Get("pineapple") << endl;
-	//	cout << endl;
-	//}
+		cout << "apple " << h.Get("apple") << endl;
+		cout << "orange " << h.Get("orange") << endl;
+		cout << "pineapple " << h.Get("pineapple") << endl;
+		cout << endl;
+	}
 
 	return 0;
 }

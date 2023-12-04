@@ -88,12 +88,49 @@ public:
 
 	void DepthFirstTraversal(int v) // v는 인덱스
 	{
-		// TODO:
+		if (visited_[v])
+			return;
+
+		visited_[v] = true;
+
+		cout << vertices_[v].item << ' ';
+
+		for (int w = 0; w < n_; w++)
+		{
+			if (matrix_[v][w] == 1 && !visited_[w])
+				DepthFirstTraversal(w);
+		}
+
 	}
 
 	void IterDFT()
 	{
-		// TODO:
+		ResetVisited();
+		
+		int v = 0;
+
+		Stack<int> s;
+		s.Push(v);
+		visited_[v] = true;
+		
+		while (!s.IsEmpty())
+		{
+			v = s.Top();
+			s.Pop();
+
+			cout << vertices_[v].item << ' ';
+
+			for (int w = 0; w < n_; w++)
+			{
+				if (matrix_[v][w] == 1 && !visited_[w])
+				{
+					s.Push(w);
+					visited_[w] = true;
+				}
+			}
+
+		}
+		
 	}
 
 	void BreadthFirstTraversal()
@@ -104,7 +141,25 @@ public:
 
 		ResetVisited();
 
-		// TODO:
+		visited_[v] = true;
+		q.Enqueue(v);
+
+		while (!q.IsEmpty())
+		{
+			v = q.Front();
+			q.Dequeue();
+			
+			cout << vertices_[v].item << ' ';
+
+			for (int w = 0; w < n_; w++)
+			{
+				if (matrix_[v][w] == 1 && !visited_[w])
+				{
+					visited_[w] = true;
+					q.Enqueue(w);
+				}
+			}
+		}
 	}
 
 	void ResetVisited()
